@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>แก้ไขข้อมูลผู้ใช้งาน</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <header class="header p-4 bg-white shadow flex justify-between items-center">
+    <h1 class="text-2xl font-bold">ข้อมูลผู้ใช้งาน</h1>
+    <a href="index.html" class="text-blue-500 hover:underline">กลับหน้าแรก</a>
+  </header>
+  <main class="p-6">
+    <div class="bg-white shadow-md rounded-lg p-6">
+      <img id="user-image" src="https://via.placeholder.com/150" alt="User Image" class="w-32 h-32 rounded-full mx-auto mb-4">
+      <h2 class="text-xl font-semibold text-center mb-2">ชื่อ: <span id="user-firstname">สมชาย</span> <span id="user-lastname">ใจดี</span></h2>
+      <p class="text-gray-600 text-center mb-2">วันเกิด: <span id="user-birthday">01/01/1990</span></p>
+      <p class="text-gray-600 text-center mb-2">ที่อยู่: <span id="user-address">123 หมู่บ้านตัวอย่าง</span></p>
+      <p class="text-gray-600 text-center mb-4">คำอธิบายเพิ่มเติม: <span id="user-description">ผู้ใช้งานทั่วไป</span></p>
+      <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="openEditModal()">แก้ไขข้อมูล</button>
+    </div>
+  </main>
+
+  <!-- Edit Modal -->
+  <div id="edit-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+      <h2 class="text-xl font-bold mb-4">แก้ไขข้อมูลผู้ใช้งาน</h2>
+      <label class="block mb-2">รูปภาพ:</label>
+      <div class="grid grid-cols-5 gap-2 mb-4">
+        <img src="https://via.placeholder.com/150" alt="รูปที่ 1" class="w-16 h-16 rounded cursor-pointer border" onclick="selectImage(this)">
+        <img src="https://via.placeholder.com/150/0000FF" alt="รูปที่ 2" class="w-16 h-16 rounded cursor-pointer border" onclick="selectImage(this)">
+        <img src="https://via.placeholder.com/150/FF0000" alt="รูปที่ 3" class="w-16 h-16 rounded cursor-pointer border" onclick="selectImage(this)">
+        <img src="https://via.placeholder.com/150/00FF00" alt="รูปที่ 4" class="w-16 h-16 rounded cursor-pointer border" onclick="selectImage(this)">
+        <img src="https://via.placeholder.com/150/FFFF00" alt="รูปที่ 5" class="w-16 h-16 rounded cursor-pointer border" onclick="selectImage(this)">
+      </div>
+      <label class="block mb-2">ชื่อ:</label>
+      <input id="edit-firstname" type="text" class="w-full border rounded p-2 mb-4">
+      <label class="block mb-2">นามสกุล:</label>
+      <input id="edit-lastname" type="text" class="w-full border rounded p-2 mb-4">
+      <label class="block mb-2">วันเกิด:</label>
+      <input id="edit-birthday" type="date" class="w-full border rounded p-2 mb-4">
+      <label class="block mb-2">ที่อยู่:</label>
+      <textarea id="edit-address" class="w-full border rounded p-2 mb-4"></textarea>
+      <label class="block mb-2">คำอธิบายเพิ่มเติม:</label>
+      <textarea id="edit-description" class="w-full border rounded p-2 mb-4"></textarea>
+      <div class="flex justify-end">
+        <button class="bg-gray-300 text-gray-700 p-2 rounded mr-2" onclick="closeEditModal()">ยกเลิก</button>
+        <button class="bg-blue-500 text-white p-2 rounded" onclick="saveUserInfo()">ยืนยัน</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedImage = document.getElementById('user-image').src;
+
+    function openEditModal() {
+      document.getElementById('edit-modal').classList.remove('hidden');
+      document.getElementById('edit-firstname').value = document.getElementById('user-firstname').textContent;
+      document.getElementById('edit-lastname').value = document.getElementById('user-lastname').textContent;
+      document.getElementById('edit-birthday').value = document.getElementById('user-birthday').textContent;
+      document.getElementById('edit-address').value = document.getElementById('user-address').textContent;
+      document.getElementById('edit-description').value = document.getElementById('user-description').textContent;
+    }
+
+    function closeEditModal() {
+      document.getElementById('edit-modal').classList.add('hidden');
+    }
+
+    function selectImage(imgElement) {
+      const images = document.querySelectorAll('#edit-modal img');
+      images.forEach(img => img.classList.remove('border-blue-500'));
+      imgElement.classList.add('border-blue-500');
+      selectedImage = imgElement.src;
+    }
+
+    function saveUserInfo() {
+      const newFirstname = document.getElementById('edit-firstname').value;
+      const newLastname = document.getElementById('edit-lastname').value;
+      const newBirthday = document.getElementById('edit-birthday').value;
+      const newAddress = document.getElementById('edit-address').value;
+      const newDescription = document.getElementById('edit-description').value;
+
+      // Update the displayed user information
+      document.getElementById('user-image').src = selectedImage;
+      document.getElementById('user-firstname').textContent = newFirstname;
+      document.getElementById('user-lastname').textContent = newLastname;
+      document.getElementById('user-birthday').textContent = newBirthday;
+      document.getElementById('user-address').textContent = newAddress;
+      document.getElementById('user-description').textContent = newDescription;
+
+      // Save the updated information to localStorage
+      localStorage.setItem('userImage', selectedImage);
+      localStorage.setItem('userFirstname', newFirstname);
+      localStorage.setItem('userLastname', newLastname);
+      localStorage.setItem('userBirthday', newBirthday);
+      localStorage.setItem('userAddress', newAddress);
+      localStorage.setItem('userDescription', newDescription);
+
+      closeEditModal();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load saved user information from localStorage
+      const savedImage = localStorage.getItem('userImage') || 'https://via.placeholder.com/150';
+      const savedFirstname = localStorage.getItem('userFirstname') || 'สมชาย';
+      const savedLastname = localStorage.getItem('userLastname') || 'ใจดี';
+      const savedBirthday = localStorage.getItem('userBirthday') || '01/01/1990';
+      const savedAddress = localStorage.getItem('userAddress') || '123 หมู่บ้านตัวอย่าง';
+      const savedDescription = localStorage.getItem('userDescription') || 'ผู้ใช้งานทั่วไป';
+
+      // Update the displayed user information
+      document.getElementById('user-image').src = savedImage;
+      document.getElementById('user-firstname').textContent = savedFirstname;
+      document.getElementById('user-lastname').textContent = savedLastname;
+      document.getElementById('user-birthday').textContent = savedBirthday;
+      document.getElementById('user-address').textContent = savedAddress;
+      document.getElementById('user-description').textContent = savedDescription;
+    });
+  </script>
+</body>
+</html>
