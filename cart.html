@@ -44,7 +44,7 @@
           const itemDiv = document.createElement('div');
           itemDiv.className = 'bg-white shadow-md rounded-lg overflow-hidden';
           itemDiv.innerHTML = `
-            <img src="../home/IMG/${index + 1}.jpg" alt="${item.name}" class="w-full h-48 object-cover" />
+            <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover" />
             <div class="p-4">
               <h3 class="text-xl font-semibold mb-2">${item.name}</h3>
               <p class="text-gray-600 mb-2">รายละเอียดสั้น ๆ ของสินค้า</p>
@@ -79,9 +79,46 @@
     }
 
     document.getElementById('checkout').addEventListener('click', () => {
-      alert('ชำระเงินสำเร็จ!');
-      localStorage.removeItem('cart');
-      renderCart();
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cart.length === 0) {
+        alert('ไม่มีสินค้าในตะกร้า');
+        return;
+      }
+
+      const summaryContainer = document.createElement('div');
+      summaryContainer.className = 'bg-white p-6 rounded-lg shadow-md mt-6';
+      summaryContainer.innerHTML = `
+        <h2 class="text-xl font-bold mb-4">สรุปรายการสินค้า</h2>
+        <ul class="mb-4">
+          ${cart
+            .map(
+              (item) => `
+            <li class="flex justify-between mb-2">
+              <span>${item.name} x ${item.quantity}</span>
+              <span>${item.price * item.quantity}฿</span>
+            </li>
+          `
+            )
+            .join('')}
+        </ul>
+        <p class="text-right font-bold text-lg mb-4">รวมทั้งหมด: ${cart.reduce(
+          (total, item) => total + item.price * item.quantity,
+          0
+        )}฿</p>
+        <button id="confirm-purchase" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">ยืนยันการซื้อ</button>
+      `;
+
+      const mainContainer = document.querySelector('main');
+      mainContainer.innerHTML = '';
+      mainContainer.appendChild(summaryContainer);
+
+      document
+        .getElementById('confirm-purchase')
+        .addEventListener('click', () => {
+          alert('การซื้อสำเร็จ! ขอบคุณที่ใช้บริการ');
+          localStorage.removeItem('cart');
+          window.location.href = 'index.html';
+        });
     });
 
     renderCart();
