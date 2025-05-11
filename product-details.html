@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-100">
   <!-- Header -->
-  <header class="header flex justify-between items-center p-4 bg-white shadow">
+  <header class="header flex justify-between items-center p-4 bg-white text-black shadow">
     <h1 class="text-2xl font-bold">MRShop</h1>
     <a href="index.html" class="text-blue-500 hover:underline">กลับหน้าแรก</a>
   </header>
@@ -39,7 +39,7 @@
         id: 2, 
         name: 'สมุด', 
         price: 20, 
-        stock: 50, 
+        stock: 99, 
         images: [
           'https://pen-perfect.com/wp-content/uploads/2020/10/OFF_7484.jpg',
           'https://inwfile.com/s-cz/j2455w.jpg',
@@ -51,7 +51,7 @@
         id: 3, 
         name: 'กระเป๋า', 
         price: 250, 
-        stock: 20, 
+        stock: 99, 
         images: [
           'https://static.thairath.co.th/media/Dtbezn3nNUxytg04ajYfSSAsTQxBBhPVcz231eVFHXtH2X.webp',
           'https://www.bschoolbag.com/wp-content/uploads/2017/07/Untitled-2.jpg',
@@ -64,7 +64,7 @@
         id: 4, 
         name: 'ยางลบ', 
         price: 5, 
-        stock: 100, 
+        stock: 99, 
         images: [
           'https://officework.co.th/upload/product/0224-0005-01.JPG',
           'https://stationerymine.com/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/2/4/249892_qm_eraser_qe600-50_black.jpg',
@@ -77,7 +77,7 @@
         id: 5, 
         name: 'ปากกา', 
         price: 10, 
-        stock: 200, 
+        stock: 99, 
         images: [
           'https://mg.co.th/wp-content/uploads/2024/03/001-Stationery-Pen-CG1.jpg',
           'https://bangpleestationery.com/wp-content/uploads/2023/10/%E0%B8%9B%E0%B8%B2%E0%B8%81%E0%B8%81%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B6%E0%B8%81%E0%B9%80%E0%B8%88%E0%B8%A5-107.png',
@@ -89,7 +89,7 @@
         id: 6, 
         name: 'ชุดนักเรียน', 
         price: 240, 
-        stock: 10, 
+        stock: 99, 
         images: [
           'https://image.bangkokbiznews.com/uploads/images/md/2023/05/bxFc73tZuSrq9qOtKIMh.webp?x-image-process=style/LG',
           'https://down-th.img.susercontent.com/file/th-11134207-7r98w-lqg1cfnbaf38b9',
@@ -171,10 +171,8 @@
     function buyNow(productId) {
       const product = products.find(p => p.id === productId);
       if (product.stock > 0) {
-        product.stock -= 1;
-        document.getElementById('stock-count').textContent = product.stock;
-        saveProductsToLocalStorage();
-        alert(`คุณได้ซื้อ ${product.name} ในราคา ฿${product.price} เรียบร้อยแล้ว`);
+        localStorage.setItem('selectedProduct', JSON.stringify(product));
+        window.location.href = 'confirm-purchase.html';
       } else {
         alert('สินค้าหมด');
       }
