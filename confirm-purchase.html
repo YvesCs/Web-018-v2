@@ -36,23 +36,23 @@
       }
     }
 
-    document.getElementById('confirm-purchase').addEventListener('click', () => {
-      const product = JSON.parse(localStorage.getItem('selectedProduct'));
-      if (product.stock > 0) {
-        product.stock -= 1;
+    document.getElementById('confirm-purchase').addEventListener('click', confirmPurchase);
+
+    function confirmPurchase() {
+      const selectedProduct = JSON.parse(localStorage.getItem('selectedProduct'));
+      if (selectedProduct) {
         const products = JSON.parse(localStorage.getItem('products')) || [];
-        const productIndex = products.findIndex(p => p.id === product.id);
-        if (productIndex !== -1) {
-          products[productIndex].stock = product.stock;
-          localStorage.setItem('products', JSON.stringify(products));
+        const product = products.find(p => p.id === selectedProduct.id);
+        if (product && product.stock > 0) {
+          product.stock -= 1; // Reduce stock count
+          localStorage.setItem('products', JSON.stringify(products)); // Save updated stock
+          alert('การซื้อสำเร็จ');
+          window.location.href = 'index.html';
+        } else {
+          alert('สินค้าหมด');
         }
-        alert(`คุณได้ซื้อ ${product.name} ในราคา ฿${product.price} เรียบร้อยแล้ว`);
-        localStorage.removeItem('selectedProduct');
-        window.location.href = 'index.html';
-      } else {
-        alert('สินค้าหมด');
       }
-    });
+    }
 
     function cancelPurchase() {
       localStorage.removeItem('selectedProduct');

@@ -171,6 +171,9 @@
     function buyNow(productId) {
       const product = products.find(p => p.id === productId);
       if (product.stock > 0) {
+        product.stock -= 1; // Reduce stock count
+        saveProductsToLocalStorage(); // Save updated stock to localStorage
+        document.getElementById('stock-count').textContent = product.stock; // Update UI
         localStorage.setItem('selectedProduct', JSON.stringify(product));
         window.location.href = 'confirm-purchase.html';
       } else {

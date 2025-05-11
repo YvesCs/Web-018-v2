@@ -78,6 +78,25 @@
       renderCart();
     }
 
+    function confirmCartPurchase() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const products = JSON.parse(localStorage.getItem('products')) || [];
+
+      cart.forEach(cartItem => {
+        const product = products.find(p => p.id === cartItem.id);
+        if (product && product.stock >= cartItem.quantity) {
+          product.stock -= cartItem.quantity; // Reduce stock count
+        } else {
+          alert(`สินค้าหมด: ${cartItem.name}`);
+        }
+      });
+
+      localStorage.setItem('products', JSON.stringify(products)); // Save updated stock
+      localStorage.removeItem('cart'); // Clear cart
+      alert('การซื้อสำเร็จ');
+      window.location.href = 'index.html';
+    }
+
     document.getElementById('checkout').addEventListener('click', () => {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       if (cart.length === 0) {
@@ -114,11 +133,7 @@
 
       document
         .getElementById('confirm-purchase')
-        .addEventListener('click', () => {
-          alert('การซื้อสำเร็จ! ขอบคุณที่ใช้บริการ');
-          localStorage.removeItem('cart');
-          window.location.href = 'index.html';
-        });
+        .addEventListener('click', confirmCartPurchase);
     });
 
     renderCart();
