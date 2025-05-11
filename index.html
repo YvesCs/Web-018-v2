@@ -12,16 +12,19 @@
   <!-- Header -->
   <header class="header">
     <h1 class="logo">MRShop</h1>
-    <div class="search-bar">
-      <input type="text" id="search" placeholder="search" oninput="searchProducts()" />
-      
+    
+    <div class="search-bar flex items-center">
+  
+      <input type="text" id="search" placeholder="search" oninput="searchProducts()" class="flex-1 outline-none" />
     </div>
     <nav class="nav">
-      <a href="#">หน้าแรก</a>
+      <a href="#"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+  <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5"/>
+</svg></a>
       <a href="cart.html" class="cart">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
-          <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 16 16">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+</svg>
       </a>
       <a href="#">ผู้มาเยือน</a>
     </nav>
@@ -50,7 +53,7 @@
 
       <!-- Product Card 1 -->
       <div class="bg-white shadow-md rounded-lg overflow-hidden" data-category="stationery">
-        <img src="../home/IMG/1.jpg" alt="สินค้า" class="w-full h-48 object-cover" />
+        <img src="https://inwfile.com/s-cs/xpv6ht.png" alt="สินค้า" class="w-full h-48 object-cover" />
         <div class="p-4">
           <h3 class="text-xl font-semibold mb-2">ดินสอ</h3>
           <p class="text-gray-600 mb-2">รายละเอียดสั้น ๆ ของสินค้า</p>
@@ -144,7 +147,12 @@
 
     function addToCart(productName, price) {
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
-      cart.push({ name: productName, price });
+      const existingItem = cart.find(item => item.name === productName);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ name: productName, price, quantity: 1 });
+      }
       localStorage.setItem('cart', JSON.stringify(cart));
       alert(`${productName} ถูกเพิ่มลงในตะกร้าแล้ว`);
     }

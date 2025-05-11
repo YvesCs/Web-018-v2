@@ -7,12 +7,16 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-  <header class="header p-4 bg-white shadow">
+  <header class="header p-4 bg-white shadow flex justify-between items-center">
     <h1 class="text-2xl font-bold">ตะกร้าสินค้า</h1>
+    <a href="index.html" class="text-blue-500 hover:underline">กลับหน้าแรก</a>
   </header>
   <main class="p-6">
     <div id="cart-items" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
     <p id="empty-cart-message" class="text-center text-gray-500 mt-4 hidden">ไม่มีสินค้าที่เลือกไว้</p>
+    <div id="total-price-container" class="text-right text-xl font-bold mt-4 hidden">
+      รวมเงิน: <span id="total-price">0</span>฿
+    </div>
     <button id="checkout" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-4 hidden">ชำระเงิน</button>
   </main>
   <script>
@@ -21,15 +25,22 @@
       const cartItemsContainer = document.getElementById('cart-items');
       const emptyCartMessage = document.getElementById('empty-cart-message');
       const checkoutButton = document.getElementById('checkout');
+      const totalPriceContainer = document.getElementById('total-price-container');
+      const totalPriceElement = document.getElementById('total-price');
 
       cartItemsContainer.innerHTML = '';
       if (cart.length === 0) {
         emptyCartMessage.classList.remove('hidden');
         checkoutButton.classList.add('hidden');
+        totalPriceContainer.classList.add('hidden');
       } else {
         emptyCartMessage.classList.add('hidden');
         checkoutButton.classList.remove('hidden');
+        totalPriceContainer.classList.remove('hidden');
+
+        let totalPrice = 0;
         cart.forEach((item, index) => {
+          totalPrice += item.price * item.quantity;
           const itemDiv = document.createElement('div');
           itemDiv.className = 'bg-white shadow-md rounded-lg overflow-hidden';
           itemDiv.innerHTML = `
@@ -38,12 +49,26 @@
               <h3 class="text-xl font-semibold mb-2">${item.name}</h3>
               <p class="text-gray-600 mb-2">รายละเอียดสั้น ๆ ของสินค้า</p>
               <p class="text-red-500 font-bold mb-4">${item.price}฿</p>
+              <div class="flex items-center justify-between mb-4">
+                <button class="bg-gray-300 text-gray-700 p-2 rounded" onclick="updateQuantity(${index}, -1)">-</button>
+                <span>${item.quantity}</span>
+                <button class="bg-gray-300 text-gray-700 p-2 rounded" onclick="updateQuantity(${index}, 1)">+</button>
+              </div>
               <button class="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600" onclick="removeFromCart(${index})">ลบ</button>
             </div>
           `;
           cartItemsContainer.appendChild(itemDiv);
         });
+
+        totalPriceElement.textContent = totalPrice;
       }
+    }
+
+    function updateQuantity(index, change) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart[index].quantity = Math.max(1, cart[index].quantity + change);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
     }
 
     function removeFromCart(index) {
