@@ -119,10 +119,12 @@
           <h2 class="text-2xl font-bold mb-2">${product.name}</h2>
           <p class="text-gray-700 mb-4">${product.description}</p>
           <p class="text-red-500 font-bold text-xl mb-4">฿${product.price}</p>
+          <p class="text-yellow-500 mb-2">คะแนนเฉลี่ย: <span id="rating-product">0</span> <img src="./IMG/star.png" class="inline w-4 h-4" /></p>
           <div class="flex space-x-4">
             <button class="w-1/2 bg-green-500 text-white p-2 rounded hover:bg-green-600" onclick="buyNow('${product.name}', ${product.price})">ซื้อ</button>
             <button class="w-1/2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('${product.name}', ${product.price})">เพิ่มลงตะกร้า</button>
           </div>
+          <button class="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 mt-2" onclick="openRatingModal('${product.id}', '${product.name}')">ให้คะแนน</button>
         `;
       } else {
         document.getElementById('product-details').innerHTML = '<p class="text-red-500">ไม่พบข้อมูลสินค้า</p>';
@@ -158,6 +160,86 @@
     }
 
     document.addEventListener('DOMContentLoaded', loadProductDetails);
+  </script>
+
+  <!-- Rating Modal -->
+  <div id="rating-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-96">
+      <h3 class="text-xl font-bold mb-4">ให้คะแนนสินค้า</h3>
+      <p id="modal-product-name" class="text-gray-700 mb-4"></p>
+      <div class="flex justify-center mb-4">
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(1)" id="star-1" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(2)" id="star-2" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(3)" id="star-3" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(4)" id="star-4" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(5)" id="star-5" />
+      </div>
+      <textarea id="rating-comment" class="w-full border rounded p-2 mb-4" placeholder="แสดงความคิดเห็น"></textarea>
+      <button class="bg-blue-500 text-white p-2 rounded w-full" onclick="submitRating()">ยืนยัน</button>
+      <button class="bg-gray-500 text-white p-2 rounded w-full mt-2" onclick="closeRatingModal()">ยกเลิก</button>
+    </div>
+  </div>
+
+  <script>
+    let currentRating = 0;
+    let currentProductId = null;
+
+    function openRatingModal(productId, productName) {
+      currentProductId = productId;
+      document.getElementById('modal-product-name').textContent = productName;
+      document.getElementById('rating-modal').classList.remove('hidden');
+    }
+
+    function closeRatingModal() {
+      currentRating = 0;
+      currentProductId = null;
+      document.getElementById('rating-modal').classList.add('hidden');
+    }
+
+    function setRating(rating) {
+      currentRating = rating;
+      for (let i = 1; i <= 5; i++) {
+        const star = document.getElementById(`star-${i}`);
+        star.style.opacity = i <= rating ? '1' : '0.5';
+      }
+    }
+
+    function submitRating() {
+      if (!currentRating || !currentProductId) {
+        alert('กรุณาให้คะแนนก่อน');
+        return;
+      }
+
+      const comment = document.getElementById('rating-comment').value;
+      const productRatings = JSON.parse(localStorage.getItem('productRatings')) || {};
+      if (!productRatings[currentProductId]) {
+        productRatings[currentProductId] = { total: 0, count: 0, reviews: [] };
+      }
+
+      productRatings[currentProductId].total += currentRating;
+      productRatings[currentProductId].count += 1;
+      productRatings[currentProductId].reviews.push({ rating: currentRating, comment });
+
+      localStorage.setItem('productRatings', JSON.stringify(productRatings));
+      updateProductRatingDisplay(currentProductId);
+
+      closeRatingModal();
+      alert('ขอบคุณสำหรับการให้คะแนน!');
+    }
+
+    function updateProductRatingDisplay(productId) {
+      const productRatings = JSON.parse(localStorage.getItem('productRatings')) || {};
+      const productData = productRatings[productId];
+      if (productData) {
+        const averageRating = (productData.total / productData.count).toFixed(1);
+        document.getElementById('rating-product').textContent = averageRating;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const productRatings = JSON.parse(localStorage.getItem('productRatings')) || {};
+      updateProductRatingDisplay('product-id');
+    });
   </script>
 </body>
 </html>

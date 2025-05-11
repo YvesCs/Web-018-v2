@@ -60,7 +60,9 @@
           <h3 class="text-xl font-semibold mb-2">ดินสอ</h3>
           <p class="text-gray-600 mb-2">ดินสอคุณภาพสูง เหมาะสำหรับการเขียนและวาดภาพ ใช้งานได้ยาวนานและเหมาะสำหรับนักเรียน นักศึกษา และศิลปิน</p>
           <p class="text-red-500 font-bold mb-4">10฿</p>
+          <p class="text-yellow-500 mb-2"><span id="rating-1">0</span> <img src="./IMG/star.png" class="inline w-4 h-4" /> (<span id="reviews-1">0</span> รีวิว)</p>
           <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('ดินสอ', 10)">เพิ่มลงตะกร้า</button>
+          <button class="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 mt-2" onclick="openRatingModal(1, 'ดินสอ')">ให้คะแนน</button>
         </div>
       </div>
 
@@ -73,7 +75,9 @@
           <h3 class="text-xl font-semibold mb-2">สมุด</h3>
           <p class="text-gray-600 mb-2">สมุดบันทึกขนาด A5 กระดาษคุณภาพดี เหมาะสำหรับการจดบันทึก การเรียน หรือการทำงาน มีความทนทานและใช้งานง่าย</p>
           <p class="text-red-500 font-bold mb-4">20฿</p>
+          <p class="text-yellow-500 mb-2"><span id="rating-2">0</span> <img src="./IMG/star.png" class="inline w-4 h-4" /> (<span id="reviews-2">0</span> รีวิว)</p>
           <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('สมุด', 20)">เพิ่มลงตะกร้า</button>
+          <button class="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 mt-2" onclick="openRatingModal(2, 'สมุด')">ให้คะแนน</button>
         </div>
       </div>
 
@@ -86,7 +90,9 @@
           <h3 class="text-xl font-semibold mb-2">กระเป๋า</h3>
           <p class="text-gray-600 mb-2">กระเป๋าสะพายขนาดกลาง เหมาะสำหรับการใช้งานประจำวัน ผลิตจากวัสดุคุณภาพสูง ทนทานต่อการใช้งาน และมีช่องเก็บของหลากหลาย</p>
           <p class="text-red-500 font-bold mb-4">250฿</p>
+          <p class="text-yellow-500 mb-2"><span id="rating-3">0</span> <img src="./IMG/star.png" class="inline w-4 h-4" /> (<span id="reviews-3">0</span> รีวิว)</p>
           <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('กระเป๋า', 250)">เพิ่มลงตะกร้า</button>
+          <button class="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 mt-2" onclick="openRatingModal(3, 'กระเป๋า')">ให้คะแนน</button>
         </div>
       </div>
 
@@ -99,7 +105,9 @@
           <h3 class="text-xl font-semibold mb-2">ยางลบ</h3>
           <p class="text-gray-600 mb-2">ยางลบคุณภาพสูง ลบสะอาดไม่ทิ้งรอย เหมาะสำหรับการใช้งานในโรงเรียนหรือสำนักงาน ใช้งานง่ายและไม่ทำลายกระดาษ</p>
           <p class="text-red-500 font-bold mb-4">5฿</p>
+          <p class="text-yellow-500 mb-2"><span id="rating-4">0</span> <img src="./IMG/star.png" class="inline w-4 h-4" /> (<span id="reviews-4">0</span> รีวิว)</p>
           <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('ยางลบ', 5)">เพิ่มลงตะกร้า</button>
+          <button class="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 mt-2" onclick="openRatingModal(4, 'ยางลบ')">ให้คะแนน</button>
         </div>
       </div>
 
@@ -112,7 +120,9 @@
           <h3 class="text-xl font-semibold mb-2">ปากกา</h3>
           <p class="text-gray-600 mb-2">ปากกาหมึกน้ำเขียนลื่น สีสันสดใส เหมาะสำหรับการเขียนในชีวิตประจำวันหรือการทำงาน มีดีไซน์ที่จับถนัดมือ</p>
           <p class="text-red-500 font-bold mb-4">10฿</p>
+          <p class="text-yellow-500 mb-2"><span id="rating-5">0</span> <img src="./IMG/star.png" class="inline w-4 h-4" /> (<span id="reviews-5">0</span> รีวิว)</p>
           <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('ปากกา', 10)">เพิ่มลงตะกร้า</button>
+          <button class="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 mt-2" onclick="openRatingModal(5, 'ปากกา')">ให้คะแนน</button>
         </div>
       </div>
 
@@ -125,11 +135,96 @@
           <h3 class="text-xl font-semibold mb-2">ชุดนักเรียน</h3>
           <p class="text-gray-600 mb-2">ชุดนักเรียนมาตรฐาน เนื้อผ้าคุณภาพดี สวมใส่สบายและทนทาน เหมาะสำหรับการใช้งานในโรงเรียนทุกวัน</p>
           <p class="text-red-500 font-bold mb-4">240฿</p>
+          <p class="text-yellow-500 mb-2"><span id="rating-6">0</span> <img src="./IMG/star.png" class="inline w-4 h-4" /> (<span id="reviews-6">0</span> รีวิว)</p>
           <button class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('ชุดนักเรียน', 240)">เพิ่มลงตะกร้า</button>
+          <button class="w-full bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 mt-2" onclick="openRatingModal(6, 'ชุดนักเรียน')">ให้คะแนน</button>
         </div>
       </div>
     </div>
   </main>
+
+  <!-- Rating Modal -->
+  <div id="rating-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg w-96">
+      <h3 class="text-xl font-bold mb-4">ให้คะแนนสินค้า</h3>
+      <p id="modal-product-name" class="text-gray-700 mb-4"></p>
+      <div class="flex justify-center mb-4">
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(1)" id="star-1" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(2)" id="star-2" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(3)" id="star-3" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(4)" id="star-4" />
+        <img src="./IMG/star.png" class="w-8 h-8 cursor-pointer opacity-50" onclick="setRating(5)" id="star-5" />
+      </div>
+      <textarea id="rating-comment" class="w-full border rounded p-2 mb-4" placeholder="แสดงความคิดเห็น"></textarea>
+      <button class="bg-blue-500 text-white p-2 rounded w-full" onclick="submitRating()">ยืนยัน</button>
+      <button class="bg-gray-500 text-white p-2 rounded w-full mt-2" onclick="closeRatingModal()">ยกเลิก</button>
+    </div>
+  </div>
+
+  <script>
+    let currentRating = 0;
+    let currentProductId = null;
+
+    function openRatingModal(productId, productName) {
+      currentProductId = productId;
+      document.getElementById('modal-product-name').textContent = productName;
+      document.getElementById('rating-modal').classList.remove('hidden');
+    }
+
+    function closeRatingModal() {
+      currentRating = 0;
+      currentProductId = null;
+      document.getElementById('rating-modal').classList.add('hidden');
+    }
+
+    function setRating(rating) {
+      currentRating = rating;
+      for (let i = 1; i <= 5; i++) {
+        const star = document.getElementById(`star-${i}`);
+        star.style.opacity = i <= rating ? '1' : '0.5';
+      }
+    }
+
+    function submitRating() {
+      if (!currentRating || !currentProductId) {
+        alert('กรุณาให้คะแนนก่อน');
+        return;
+      }
+
+      const comment = document.getElementById('rating-comment').value;
+      const productRatings = JSON.parse(localStorage.getItem('productRatings')) || {};
+      if (!productRatings[currentProductId]) {
+        productRatings[currentProductId] = { total: 0, count: 0, reviews: [] };
+      }
+
+      productRatings[currentProductId].total += currentRating;
+      productRatings[currentProductId].count += 1;
+      productRatings[currentProductId].reviews.push({ rating: currentRating, comment });
+
+      localStorage.setItem('productRatings', JSON.stringify(productRatings));
+      updateProductRatingDisplay(currentProductId);
+
+      closeRatingModal();
+      alert('ขอบคุณสำหรับการให้คะแนน!');
+    }
+
+    function updateProductRatingDisplay(productId) {
+      const productRatings = JSON.parse(localStorage.getItem('productRatings')) || {};
+      const productData = productRatings[productId];
+      if (productData) {
+        const averageRating = (productData.total / productData.count).toFixed(1);
+        document.getElementById(`rating-${productId}`).textContent = averageRating;
+        document.getElementById(`reviews-${productId}`).textContent = productData.count;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const productRatings = JSON.parse(localStorage.getItem('productRatings')) || {};
+      Object.keys(productRatings).forEach(productId => {
+        updateProductRatingDisplay(productId);
+      });
+    });
+  </script>
 
   <script>
     function filterProducts() {
