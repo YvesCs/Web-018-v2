@@ -3,49 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MRShop</title>
+  <title>Cart</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gray-100">
-
-  <!-- Header -->
-  <header class="bg-white shadow p-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold text-blue-600">MRShop</h1>
-    <nav>
-      <a href="index.html" class="mr-4 text-gray-600 hover:text-blue-500">หน้าแรก</a>
-      <a href="cart.html" class="mr-4 text-gray-600 hover:text-blue-500">ตะกร้า</a>
-      <a href="login.html" class="text-gray-600 hover:text-blue-500">เข้าสู่ระบบ</a>
-    </nav>
+  <header class="header p-4 bg-white shadow">
+    <h1 class="text-2xl font-bold">ตะกร้าสินค้า</h1>
   </header>
-
-  <!-- Cart Section -->
   <main class="p-6">
-    <h2 class="text-2xl font-bold mb-4">ตะกร้าสินค้า</h2>
-    <div class="bg-white shadow-md rounded-lg p-4">
-      <div class="flex items-center justify-between border-b pb-4 mb-4">
-        <div class="flex items-center">
-          <img src="https://via.placeholder.com/100" alt="สินค้า" class="w-16 h-16 object-cover rounded mr-4">
-          <div>
-            <h3 class="text-lg font-semibold">ชื่อสินค้า</h3>
-            <p class="text-gray-600">฿1,200</p>
-          </div>
-        </div>
-        <div>
-          <input type="number" value="1" min="1" class="w-16 p-2 border rounded text-center">
-        </div>
-      </div>
-      <!-- Add more items as needed -->
-      <div class="text-right">
-        <p class="text-lg font-bold">รวม: ฿1,200</p>
-        <button class="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 mt-4">ชำระเงิน</button>
-      </div>
-    </div>
+    <div id="cart-items" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
+    <p id="empty-cart-message" class="text-center text-gray-500 mt-4 hidden">ไม่มีสินค้าที่เลือกไว้</p>
+    <button id="checkout" class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600 mt-4 hidden">ชำระเงิน</button>
   </main>
+  <script>
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = document.getElementById('cart-items');
+      const emptyCartMessage = document.getElementById('empty-cart-message');
+      const checkoutButton = document.getElementById('checkout');
 
-  <!-- Footer -->
-  <footer class="bg-white text-center p-4 shadow mt-6">
-    <p class="text-sm text-gray-500">© 2025 MyShop. All rights reserved.</p>
-  </footer>
+      cartItemsContainer.innerHTML = '';
+      if (cart.length === 0) {
+        emptyCartMessage.classList.remove('hidden');
+        checkoutButton.classList.add('hidden');
+      } else {
+        emptyCartMessage.classList.add('hidden');
+        checkoutButton.classList.remove('hidden');
+        cart.forEach((item, index) => {
+          const itemDiv = document.createElement('div');
+          itemDiv.className = 'bg-white shadow-md rounded-lg overflow-hidden';
+          itemDiv.innerHTML = `
+            <img src="../home/IMG/${index + 1}.jpg" alt="${item.name}" class="w-full h-48 object-cover" />
+            <div class="p-4">
+              <h3 class="text-xl font-semibold mb-2">${item.name}</h3>
+              <p class="text-gray-600 mb-2">รายละเอียดสั้น ๆ ของสินค้า</p>
+              <p class="text-red-500 font-bold mb-4">${item.price}฿</p>
+              <button class="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600" onclick="removeFromCart(${index})">ลบ</button>
+            </div>
+          `;
+          cartItemsContainer.appendChild(itemDiv);
+        });
+      }
+    }
 
+    function removeFromCart(index) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    document.getElementById('checkout').addEventListener('click', () => {
+      alert('ชำระเงินสำเร็จ!');
+      localStorage.removeItem('cart');
+      renderCart();
+    });
+
+    renderCart();
+  </script>
 </body>
 </html>
