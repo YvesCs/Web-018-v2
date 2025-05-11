@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>รายละเอียดสินค้า</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <!-- Header -->
+  <header class="header flex justify-between items-center p-4 bg-white shadow">
+    <h1 class="text-2xl font-bold">MRShop</h1>
+    <a href="index.html" class="text-blue-500 hover:underline">กลับหน้าแรก</a>
+  </header>
+
+  <!-- Product Details -->
+  <main class="p-6">
+    <div id="product-details" class="bg-white shadow-md rounded-lg p-6">
+      <!-- Product details will be dynamically loaded here -->
+    </div>
+  </main>
+
+  <script>
+    const products = [
+      { 
+        id: 1, 
+        name: 'ดินสอ', 
+        price: 10, 
+        images: [
+          'https://inwfile.com/s-cs/xpv6ht.png',
+          'https://www.siriwongpanid.com/wp-content/uploads/2019/06/1011036-600x600.jpg',
+          'https://upload.wikimedia.org/wikipedia/commons/0/08/Pencils_hb.jpg',
+          'https://api.chulabook.com/images/pid-2858.jpg'
+        ], 
+        description: 'ดินสอคุณภาพสูง เหมาะสำหรับการเขียนและวาดภาพ ใช้งานได้ยาวนานและเหมาะสำหรับนักเรียน นักศึกษา และศิลปินที่ต้องการความแม่นยำในการเขียนและวาดภาพ' 
+      },
+      { 
+        id: 2, 
+        name: 'สมุด', 
+        price: 20, 
+        images: [
+          'https://pen-perfect.com/wp-content/uploads/2020/10/OFF_7484.jpg',
+          'https://inwfile.com/s-cz/j2455w.jpg',
+          'https://sakura.in.th/public/storage/products/e-file/cnb/cnb56/cnb56-13.jpg'
+        ], 
+        description: 'สมุดบันทึกขนาด A5 กระดาษคุณภาพดี เหมาะสำหรับการจดบันทึก การเรียน หรือการทำงาน มีความทนทานและใช้งานง่าย พร้อมดีไซน์ที่เรียบง่ายและทันสมัย' 
+      },
+      { 
+        id: 3, 
+        name: 'กระเป๋า', 
+        price: 250, 
+        images: [
+          'https://static.thairath.co.th/media/Dtbezn3nNUxytg04ajYfSSAsTQxBBhPVcz231eVFHXtH2X.webp',
+          'https://www.bschoolbag.com/wp-content/uploads/2017/07/Untitled-2.jpg',
+          'https://inwfile.com/s-ci/mto73b.jpg',
+          'https://media.allonline.7eleven.co.th/pdmain/601465-00-bags-dodolove.jpg'
+        ], 
+        description: 'กระเป๋าสะพายขนาดกลาง เหมาะสำหรับการใช้งานประจำวัน ผลิตจากวัสดุคุณภาพสูง ทนทานต่อการใช้งาน และมีช่องเก็บของหลากหลาย' 
+      },
+      { 
+        id: 4, 
+        name: 'ยางลบ', 
+        price: 5, 
+        images: [
+          'https://officework.co.th/upload/product/0224-0005-01.JPG',
+          'https://stationerymine.com/media/catalog/product/cache/cf3f2243ef4940fd5c66f2ff035145ac/2/4/249892_qm_eraser_qe600-50_black.jpg',
+          'https://down-th.img.susercontent.com/file/e51b8c1ec3299f5eb026958713f6b6f1',
+          'https://officeaceshop.com/wp-content/uploads/2019/06/994efe495cda8f660fe21dbe08a44fed.jpg'
+        ], 
+        description: 'ยางลบคุณภาพสูง ลบสะอาดไม่ทิ้งรอย เหมาะสำหรับการใช้งานในโรงเรียนหรือสำนักงาน ใช้งานง่ายและไม่ทำลายกระดาษ' 
+      },
+      { 
+        id: 5, 
+        name: 'ปากกา', 
+        price: 10, 
+        images: [
+          'https://mg.co.th/wp-content/uploads/2024/03/001-Stationery-Pen-CG1.jpg',
+          'https://bangpleestationery.com/wp-content/uploads/2023/10/%E0%B8%9B%E0%B8%B2%E0%B8%81%E0%B8%81%E0%B8%B2%E0%B8%AB%E0%B8%A1%E0%B8%B6%E0%B8%81%E0%B9%80%E0%B8%88%E0%B8%A5-107.png',
+          'https://shop.nanmee.com/media/catalog/product/cache/d8d9aa06cd064fc4dcd17ca0109fda8f/8/8/8851553155837-1.jpg',
+          'https://btrstationery.com/wp-content/uploads/2022/10/%E0%B8%9B%E0%B8%B2%E0%B8%81%E0%B9%80%E0%B8%88%E0%B8%A5-O-Second-pastel.png'
+        ], 
+        description: 'ปากกาหมึกน้ำเขียนลื่น สีสันสดใส เหมาะสำหรับการเขียนในชีวิตประจำวันหรือการทำงาน มีดีไซน์ที่จับถนัดมือ' 
+      },
+      { 
+        id: 6, 
+        name: 'ชุดนักเรียน', 
+        price: 240, 
+        images: [
+          'https://image.bangkokbiznews.com/uploads/images/md/2023/05/bxFc73tZuSrq9qOtKIMh.webp?x-image-process=style/LG',
+          'https://down-th.img.susercontent.com/file/th-11134207-7r98w-lqg1cfnbaf38b9',
+          'https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/catalog/product/12/20/2000003120512/2000003120512_1-20240409093723-.jpg'
+        ], 
+        description: 'ชุดนักเรียนมาตรฐาน เนื้อผ้าคุณภาพดี สวมใส่สบายและทนทาน เหมาะสำหรับการใช้งานในโรงเรียนทุกวัน' 
+      },
+    ];
+
+    function loadProductDetails() {
+      const params = new URLSearchParams(window.location.search);
+      const productId = parseInt(params.get('id'), 10);
+      const product = products.find(p => p.id === productId);
+
+      if (product) {
+        const productDetails = document.getElementById('product-details');
+        const imagesHtml = product.images.map((image, index) => `
+          <img src="${image}" alt="${product.name}" class="w-full max-h-96 object-contain rounded mb-4 ${index === 0 ? '' : 'hidden'}" id="main-image">
+        `).join('');
+
+        const thumbnailsHtml = product.images.map((image, index) => `
+          <img src="${image}" alt="${product.name}" class="w-20 h-20 object-cover rounded cursor-pointer border ${index === 0 ? 'border-blue-500' : 'border-gray-300'}" onclick="showImage(${index})">
+        `).join('');
+
+        productDetails.innerHTML = `
+          <div class="relative">
+            ${imagesHtml}
+          </div>
+          <div class="flex space-x-2 mt-4">
+            ${thumbnailsHtml}
+          </div>
+          <h2 class="text-2xl font-bold mb-2">${product.name}</h2>
+          <p class="text-gray-700 mb-4">${product.description}</p>
+          <p class="text-red-500 font-bold text-xl mb-4">฿${product.price}</p>
+          <div class="flex space-x-4">
+            <button class="w-1/2 bg-green-500 text-white p-2 rounded hover:bg-green-600" onclick="buyNow('${product.name}', ${product.price})">ซื้อ</button>
+            <button class="w-1/2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600" onclick="addToCart('${product.name}', ${product.price})">เพิ่มลงตะกร้า</button>
+          </div>
+        `;
+      } else {
+        document.getElementById('product-details').innerHTML = '<p class="text-red-500">ไม่พบข้อมูลสินค้า</p>';
+      }
+    }
+
+    function showImage(index) {
+      const mainImages = document.querySelectorAll('#main-image');
+      const thumbnails = document.querySelectorAll('.cursor-pointer');
+      mainImages.forEach((img, i) => {
+        img.classList.toggle('hidden', i !== index);
+      });
+      thumbnails.forEach((thumb, i) => {
+        thumb.classList.toggle('border-blue-500', i === index);
+        thumb.classList.toggle('border-gray-300', i !== index);
+      });
+    }
+
+    function addToCart(productName, price) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const existingItem = cart.find(item => item.name === productName);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        cart.push({ name: productName, price, quantity: 1 });
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(`${productName} ถูกเพิ่มลงในตะกร้าแล้ว`);
+    }
+
+    function buyNow(productName, price) {
+      alert(`คุณได้ซื้อ ${productName} ในราคา ฿${price} เรียบร้อยแล้ว`);
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProductDetails);
+  </script>
+</body>
+</html>
